@@ -4,15 +4,20 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-image: url('safari_background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     color: #333;
+    min-height: 100vh;
 }
 
 header {
-    background-color: #0f15cd;
+    background-color: rgba(15, 21, 205, 0.9);
     color: white;
     padding: 1em;
     text-align: center;
+    backdrop-filter: blur(5px);
 }
 
 nav ul {
@@ -35,28 +40,67 @@ nav a {
 }
 
 nav a:hover {
-    background-color: #0f15cd;
+    background-color: rgba(15, 21, 205, 0.7);
     border-radius: 5px;
 }
 
 main {
     padding: 20px;
+    margin-bottom: 60px; /* Add space for fixed footer */
 }
 
 section {
     margin: 20px 0;
     padding: 20px;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 8px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(5px);
 }
 
 footer {
-    background-color: #0f15cd;
+    background-color: rgba(15, 21, 205, 0.9);
     color: white;
     text-align: center;
     padding: 10px 0;
     position: fixed;
     bottom: 0;
     width: 100%;
+    backdrop-filter: blur(5px);
+}
+
+/* Add styles for buttons */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #0f15cd;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #0a0f9e;
+}
+
+/* Add styles for grids */
+.lesson-grid, .game-grid, .experiment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.lesson-card, .game-card, .experiment-card {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.materials {
+    list-style-type: disc;
+    margin: 10px 0;
+    padding-left: 20px;
 }
