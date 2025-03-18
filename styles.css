@@ -13,7 +13,7 @@ body {
 }
 
 header {
-    background-color: rgba(15, 21, 205, 0.9);
+    background-color: #5c9b0a;
     color: white;
     padding: 1em;
     text-align: center;
@@ -40,7 +40,7 @@ nav a {
 }
 
 nav a:hover {
-    background-color: rgba(15, 21, 205, 0.7);
+    background-color: #5c9b0a;
     border-radius: 5px;
 }
 
@@ -59,7 +59,7 @@ section {
 }
 
 footer {
-    background-color: rgba(15, 21, 205, 0.9);
+    background-color: #5c9b0a;
     color: white;
     text-align: center;
     padding: 10px 0;
@@ -73,7 +73,7 @@ footer {
 .button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #0f15cd;
+    background-color: #5c9b0a;
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -81,7 +81,7 @@ footer {
 }
 
 .button:hover {
-    background-color: #0a0f9e;
+    background-color:#5c9b0a;
 }
 
 /* Add styles for grids */
