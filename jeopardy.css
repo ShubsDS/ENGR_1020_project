@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000080;
+    color: white;
+    text-align: center;
+}
+
+header h1 {
+    margin: 20px 0;
+    font-size: 2.5em;
+    color: gold;
+}
+
+.jeopardy-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.category {
+    background-color: #0000CD;
+    padding: 20px;
+    font-weight: bold;
+    border: 2px solid white;
+}
+
+.square {
+    background-color: #1E90FF;
+    padding: 30px;
+    font-size: 1.5em;
+    border: 2px solid white;
+    cursor: pointer;
+}
+
+.square:hover {
+    background-color: #4682B4;
+}
