@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question</title>
+    <link rel="stylesheet" href="../jeopardy.css">
+</head>
+<body>
+    <header>
+        <h1>Physics Jeopardy</h1>
+    </header>
+    <main>
+        <div class="question-container">
+            <p class="question-text">What is the SI unit of force?</p>
+            <form id="answer-form">
+                <label for="user-answer">Your Answer:</label>
+                <input type="text" id="user-answer" name="user-answer" required>
+                <button type="submit">Submit</button>
+            </form>
+            <p id="feedback" style="display: none;">Correct Answer: Newton (N)</p>
+        </div>
+    </main>
+    <script>
+        document.getElementById("answer-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            document.getElementById("feedback").style.display = "block";
+        });
+    </script>
+</body>
+</html>
