@@ -6,7 +6,7 @@ body {
     margin: 0;
     padding: 0;
     /* Set safari background with proper scaling and positioning */
-    background-image: url('safari_background.jpg');
+    background-image: url('imgs/safari_background.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed; /* Keep background fixed while scrolling */
@@ -16,7 +16,7 @@ body {
 
 /* Header styling with semi-transparent background and blur effect */
 header {
-    background-color: #5c9b0a; /* Semi-transparent blue */
+    background-color: #47730e; /* Semi-transparent blue */
     color: white;
     padding: 1em;
     text-align: center;
@@ -47,9 +47,10 @@ nav a {
 
 /* Navigation hover effect */
 nav a:hover {
-    background-color: #5c9b0a;
+    background-color: #47730e;
     border-radius: 5px;
 }
+
 
 /* Main content area styling */
 main {
@@ -69,7 +70,7 @@ section {
 
 /* Footer styling with fixed position */
 footer {
-    background-color: #5c9b0a;
+    background-color: #47730e;
     color: white;
     text-align: center;
     padding: 10px 0;
@@ -83,7 +84,7 @@ footer {
 .button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #5c9b0a;
+    background-color: #47730e;
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -92,7 +93,7 @@ footer {
 
 /* Button hover effect */
 .button:hover {
-    background-color: #5c9b0a;
+    background-color: #47730e;
 }
 
 /* Grid layout for lessons, games, and experiments sections */
