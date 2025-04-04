@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Physics Jeopardy</title>
     <link rel="stylesheet" href="jeopardy.css">
+    <style>
+        .square.clicked {
+            background-color: gray;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -17,32 +23,61 @@
             <div class="category">Category 3</div>
             <div class="category">Category 4</div>
             <div class="category">Category 5</div>
-            <a href="questions/question1.html"><div class="square">$100</div></a>
-            <a href="questions/question2.html"><div class="square">$100</div></a>
-            <a href="questions/question3.html"><div class="square">$100</div></a>
-            <a href="questions/question4.html"><div class="square">$100</div></a>
-            <a href="questions/question5.html"><div class="square">$100</div></a>
-            <a href="questions/question6.html"><div class="square">$200</div></a>
-            <a href="questions/question7.html"><div class="square">$200</div></a>
-            <a href="questions/question8.html"><div class="square">$200</div></a>
-            <a href="questions/question9.html"><div class="square">$200</div></a>
-            <a href="questions/question10.html"><div class="square">$200</div></a>
-            <a href="questions/question11.html"><div class="square">$300</div></a>
-            <a href="questions/question12.html"><div class="square">$300</div></a>
-            <a href="questions/question13.html"><div class="square">$300</div></a>
-            <a href="questions/question14.html"><div class="square">$300</div></a>
-            <a href="questions/question15.html"><div class="square">$300</div></a>
-            <a href="questions/question16.html"><div class="square">$400</div></a>
-            <a href="questions/question17.html"><div class="square">$400</div></a>
-            <a href="questions/question18.html"><div class="square">$400</div></a>
-            <a href="questions/question19.html"><div class="square">$400</div></a>
-            <a href="questions/question20.html"><div class="square">$400</div></a>
-            <a href="questions/question21.html"><div class="square">$500</div></a>
-            <a href="questions/question22.html"><div class="square">$500</div></a>
-            <a href="questions/question23.html"><div class="square">$500</div></a>
-            <a href="questions/question24.html"><div class="square">$500</div></a>
-            <a href="questions/question25.html"><div class="square">$500</div></a>
+            <a href="questions/question1.html"><div class="square" id="square1">$100</div></a>
+            <a href="questions/question2.html"><div class="square" id="square2">$100</div></a>
+            <a href="questions/question3.html"><div class="square" id="square3">$100</div></a>
+            <a href="questions/question4.html"><div class="square" id="square4">$100</div></a>
+            <a href="questions/question5.html"><div class="square" id="square5">$100</div></a>
+            <a href="questions/question6.html"><div class="square" id="square6">$200</div></a>
+            <a href="questions/question7.html"><div class="square" id="square7">$200</div></a>
+            <a href="questions/question8.html"><div class="square" id="square8">$200</div></a>
+            <a href="questions/question9.html"><div class="square" id="square9">$200</div></a>
+            <a href="questions/question10.html"><div class="square" id="square10">$200</div></a>
+            <a href="questions/question11.html"><div class="square" id="square11">$300</div></a>
+            <a href="questions/question12.html"><div class="square" id="square12">$300</div></a>
+            <a href="questions/question13.html"><div class="square" id="square13">$300</div></a>
+            <a href="questions/question14.html"><div class="square" id="square14">$300</div></a>
+            <a href="questions/question15.html"><div class="square" id="square15">$300</div></a>
+            <a href="questions/question16.html"><div class="square" id="square16">$400</div></a>
+            <a href="questions/question17.html"><div class="square" id="square17">$400</div></a>
+            <a href="questions/question18.html"><div class="square" id="square18">$400</div></a>
+            <a href="questions/question19.html"><div class="square" id="square19">$400</div></a>
+            <a href="questions/question20.html"><div class="square" id="square20">$400</div></a>
+            <a href="questions/question21.html"><div class="square" id="square21">$500</div></a>
+            <a href="questions/question22.html"><div class="square" id="square22">$500</div></a>
+            <a href="questions/question23.html"><div class="square" id="square23">$500</div></a>
+            <a href="questions/question24.html"><div class="square" id="square24">$500</div></a>
+            <a href="questions/question25.html"><div class="square" id="square25">$500</div></a>
         </div>
     </main>
+    <script>
+        // Load clicked state from localStorage
+        document.addEventListener('DOMContentLoaded', () => {
+            const clickedSquares = JSON.parse(localStorage.getItem('clickedSquares')) || [];
+            clickedSquares.forEach(id => {
+                const square = document.getElementById(id);
+                if (square) {
+                    square.classList.add('clicked');
+                }
+            });
+        });
+
+        // Add click event to squares
+        document.querySelectorAll('.square').forEach(square => {
+            square.addEventListener('click', function() {
+                this.classList.add('clicked');
+                const clickedSquares = JSON.parse(localStorage.getItem('clickedSquares')) || [];
+                if (!clickedSquares.includes(this.id)) {
+                    clickedSquares.push(this.id);
+                    localStorage.setItem('clickedSquares', JSON.stringify(clickedSquares));
+                }
+            });
+        });
+
+        // Clear localStorage when the user exits the website
+        window.addEventListener('beforeunload', () => {
+            localStorage.clear();
+        });
+    </script>
 </body>
 </html>

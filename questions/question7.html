@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Question</title>
     <link rel="stylesheet" href="../jeopardy.css">
+    <style>
+        body {
+            color: white;
+        }
+        .button {
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -21,11 +29,17 @@
             <p id="feedback" style="display: none;">Correct Answer: V = IR</p>
         </div>
     </main>
+    <a href="../jeopardy.html" class="button" onclick="returnToMain()">Return to Main Menu</a>
     <script>
         document.getElementById("answer-form").addEventListener("submit", function(event) {
             event.preventDefault();
             document.getElementById("feedback").style.display = "block";
         });
+
+        function returnToMain() {
+            // Preserve localStorage state
+            window.location.href = "../jeopardy.html";
+        }
     </script>
 </body>
 </html>
