@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equation Matcher - Hoos Exploring Physics</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #arrowCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            pointer-events: none; /* Prevent canvas from intercepting mouse events */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Equation Matcher</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="games.html">Games</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="equation-matcher">
+            <h2>Match the Equations</h2>
+            <p>Drag and drop to match the left-hand side of the equation with the right-hand side.</p>
+            <div class="matching-game">
+                <div class="column left">
+                    <div class="draggable" id="lhs1">F</div>
+                    <div class="draggable" id="lhs2">E</div>
+                    <div class="draggable" id="lhs3">V</div>
+                    <div class="draggable" id="lhs4">P</div>
+                </div>
+                <div class="column right">
+                    <div class="draggable" id="rhs1">ma</div>
+                    <div class="draggable" id="rhs2">mc²</div>
+                    <div class="draggable" id="rhs3">IR</div>
+                    <div class="draggable" id="rhs4">W/t</div>
+                </div>
+            </div>
+            <canvas id="arrowCanvas"></canvas>
+        </section>
+    </main>
+    <script>
+        const canvas = document.getElementById('arrowCanvas');
+        const ctx = canvas.getContext('2d');
+        const leftBoxes = document.querySelectorAll('.column.left .draggable');
+        const rightBoxes = document.querySelectorAll('.column.right .draggable');
+        let isDragging = false;
+        let startCoords = null;
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        // Test arrow drawing
+        window.onload = function() {
+            drawArrow(100, 100, 300, 300); // This should draw a visible arrow
+            console.log('Drawing test arrow');
+        };
+
+        function drawArrow(fromX, fromY, toX, toY) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+            ctx.moveTo(fromX, fromY);
+            const headLength = 10;
+            const angle = Math.atan2(toY - fromY, toX - fromX);
+            ctx.beginPath();2;
+            ctx.moveTo(toX, toY);
+            ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6), toY - headLength * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(toX - headLength * Math.cos(angle + Math.PI / 6), toY - headLength * Math.sin(angle + Math.PI / 6));
+            ctx.lineTo(toX, toY);;
+            ctx.fillStyle = 'black';(toY - fromY, toX - fromX);
+            ctx.fill();th();
+        }   ctx.moveTo(toX, toY);
+            ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6), toY - headLength * Math.sin(angle - Math.PI / 6));
+        function getBoxCenter(box) {gth * Math.cos(angle + Math.PI / 6), toY - headLength * Math.sin(angle + Math.PI / 6));
+            const rect = box.getBoundingClientRect();
+            return {Style = 'black';
+                x: rect.left + rect.width / 2,
+                y: rect.top + rect.height / 2
+            };
+        }unction getBoxCenter(box) {
+            const rect = box.getBoundingClientRect();
+        leftBoxes.forEach(box => {
+            box.addEventListener('mousedown', (e) => {
+                isDragging = true;.height / 2
+                startCoords = getBoxCenter(box);
+            });
+        });
+        leftBoxes.forEach(box => {
+        canvas.addEventListener('mousemove', (e) => {{
+            if (isDragging) {true;
+                drawArrow(startCoords.x, startCoords.y, e.clientX, e.clientY);
+            });
+        });
+
+        canvas.addEventListener('mouseup', (e) => { {
+            if (isDragging) {
+                isDragging = false;ds.x, startCoords.y, e.clientX, e.clientY);
+                const endBox = Array.from(rightBoxes).find(box => {
+                    const rect = box.getBoundingClientRect();
+                    return (
+                        e.clientX >= rect.left && {
+                        e.clientX <= rect.right &&
+                        e.clientY >= rect.top &&
+                        e.clientY <= rect.bottomoxes).find(box => {
+                    );nst rect = box.getBoundingClientRect();
+                }); return (
+                        e.clientX >= rect.left &&
+                if (endBox) {entX <= rect.right &&
+                    const endCoords = getBoxCenter(endBox);
+                    drawArrow(startCoords.x, startCoords.y, endCoords.x, endCoords.y);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }   if (endBox) {
+        });         const endCoords = getBoxCenter(endBox);
+    </script>       drawArrow(startCoords.x, startCoords.y, endCoords.x, endCoords.y);
+    <footer>    } else {
+        <p>&copy; 2025 Physics Fun Zone | All Rights Reserved</p>ht);
+        <a href="mailto:fvc9ch@virginia.edu" target="_blank">Contact Us!</a>
+    </footer>
+</body> });
+</html>cript>
+    <footer>
+        <p>&copy; 2025 Physics Fun Zone | All Rights Reserved</p>
+        <a href="mailto:fvc9ch@virginia.edu" target="_blank">Contact Us!</a>
+    </footer>
+</body>
+</html>
