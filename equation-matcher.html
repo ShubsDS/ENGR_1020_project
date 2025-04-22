@@ -1,135 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Equation Matcher - Hoos Exploring Physics</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        #arrowCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 10;
-            pointer-events: none; /* Prevent canvas from intercepting mouse events */
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Physics Equation Matching Game - Hoos Exploring Physics</title>
+  <!-- Shared stylesheet for site-wide styling -->
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Page-specific adjustments */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ece9e6, #ffffff);
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    header {
+      width: 100%;
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 10px 0;
+      margin-bottom: 20px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #333;
+      text-align: center;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      margin: 10px 0 0;
+      padding: 0;
+    }
+    nav li {
+      margin: 0 15px;
+    }
+    nav a {
+      text-decoration: none;
+      color: #007acc;
+      font-weight: bold;
+      transition: color 0.2s;
+    }
+    nav a:hover {
+      color: #005fa3;
+    }
+    main {
+      width: 100%;
+      max-width: 720px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h2 {
+      margin: 0;
+      color: #333;
+      font-size: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    #game-board {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 15px;
+      width: 100%;
+      margin-top: 20px;
+    }
+    .tile {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      font-size: 1.2rem;
+      color: #444;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      user-select: none;
+      transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+    }
+    .tile:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    .tile.selected {
+      background-color: #f7d794;
+      transform: scale(1.05);
+    }
+    .tile.fade-out {
+      animation: fadeOut 0.5s forwards;
+    }
+    @keyframes fadeOut {
+      to { opacity: 0; transform: scale(0.5); }
+    }
+    #message {
+      margin-top: 15px;
+      font-size: 1.1rem;
+      height: 1.2em;
+      color: #555;
+    }
+    #completed {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #2d572c;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Equation Matcher</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="games.html">Games</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <section id="equation-matcher">
-            <h2>Match the Equations</h2>
-            <p>Drag and drop to match the left-hand side of the equation with the right-hand side.</p>
-            <div class="matching-game">
-                <div class="column left">
-                    <div class="draggable" id="lhs1">F</div>
-                    <div class="draggable" id="lhs2">E</div>
-                    <div class="draggable" id="lhs3">V</div>
-                    <div class="draggable" id="lhs4">P</div>
-                </div>
-                <div class="column right">
-                    <div class="draggable" id="rhs1">ma</div>
-                    <div class="draggable" id="rhs2">mc²</div>
-                    <div class="draggable" id="rhs3">IR</div>
-                    <div class="draggable" id="rhs4">W/t</div>
-                </div>
-            </div>
-            <canvas id="arrowCanvas"></canvas>
-        </section>
-    </main>
-    <script>
-        const canvas = document.getElementById('arrowCanvas');
-        const ctx = canvas.getContext('2d');
-        const leftBoxes = document.querySelectorAll('.column.left .draggable');
-        const rightBoxes = document.querySelectorAll('.column.right .draggable');
-        let isDragging = false;
-        let startCoords = null;
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        // Test arrow drawing
-        window.onload = function() {
-            drawArrow(100, 100, 300, 300); // This should draw a visible arrow
-            console.log('Drawing test arrow');
-        };
-
-        function drawArrow(fromX, fromY, toX, toY) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.beginPath();
-            ctx.moveTo(fromX, fromY);
-            const headLength = 10;
-            const angle = Math.atan2(toY - fromY, toX - fromX);
-            ctx.beginPath();2;
-            ctx.moveTo(toX, toY);
-            ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6), toY - headLength * Math.sin(angle - Math.PI / 6));
-            ctx.lineTo(toX - headLength * Math.cos(angle + Math.PI / 6), toY - headLength * Math.sin(angle + Math.PI / 6));
-            ctx.lineTo(toX, toY);;
-            ctx.fillStyle = 'black';(toY - fromY, toX - fromX);
-            ctx.fill();th();
-        }   ctx.moveTo(toX, toY);
-            ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6), toY - headLength * Math.sin(angle - Math.PI / 6));
-        function getBoxCenter(box) {gth * Math.cos(angle + Math.PI / 6), toY - headLength * Math.sin(angle + Math.PI / 6));
-            const rect = box.getBoundingClientRect();
-            return {Style = 'black';
-                x: rect.left + rect.width / 2,
-                y: rect.top + rect.height / 2
-            };
-        }unction getBoxCenter(box) {
-            const rect = box.getBoundingClientRect();
-        leftBoxes.forEach(box => {
-            box.addEventListener('mousedown', (e) => {
-                isDragging = true;.height / 2
-                startCoords = getBoxCenter(box);
-            });
-        });
-        leftBoxes.forEach(box => {
-        canvas.addEventListener('mousemove', (e) => {{
-            if (isDragging) {true;
-                drawArrow(startCoords.x, startCoords.y, e.clientX, e.clientY);
-            });
-        });
-
-        canvas.addEventListener('mouseup', (e) => { {
-            if (isDragging) {
-                isDragging = false;ds.x, startCoords.y, e.clientX, e.clientY);
-                const endBox = Array.from(rightBoxes).find(box => {
-                    const rect = box.getBoundingClientRect();
-                    return (
-                        e.clientX >= rect.left && {
-                        e.clientX <= rect.right &&
-                        e.clientY >= rect.top &&
-                        e.clientY <= rect.bottomoxes).find(box => {
-                    );nst rect = box.getBoundingClientRect();
-                }); return (
-                        e.clientX >= rect.left &&
-                if (endBox) {entX <= rect.right &&
-                    const endCoords = getBoxCenter(endBox);
-                    drawArrow(startCoords.x, startCoords.y, endCoords.x, endCoords.y);
-                } else {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                }
-            }   if (endBox) {
-        });         const endCoords = getBoxCenter(endBox);
-    </script>       drawArrow(startCoords.x, startCoords.y, endCoords.x, endCoords.y);
-    <footer>    } else {
-        <p>&copy; 2025 Physics Fun Zone | All Rights Reserved</p>ht);
-        <a href="mailto:fvc9ch@virginia.edu" target="_blank">Contact Us!</a>
-    </footer>
-</body> });
-</html>cript>
-    <footer>
-        <p>&copy; 2025 Physics Fun Zone | All Rights Reserved</p>
-        <a href="mailto:fvc9ch@virginia.edu" target="_blank">Contact Us!</a>
-    </footer>
+  <header>
+    <h1>Hoos Exploring Physics</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="lessons.html">Lessons</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="experiments.html">Experiments</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <h2>Physics Matching Game</h2>
+    <div id="game-board"></div>
+    <div id="message"></div>
+    <div id="completed"></div>
+  </main>
+  <script>
+    const equations = [
+      { parts: ['F', 'ma'], full: 'F=ma' },
+      { parts: ['E', 'mc²'], full: 'E=mc²' },
+      { parts: ['V', 'IR'], full: 'V=IR' },
+      { parts: ['p', 'mv'], full: 'p=mv' }
+    ];
+    const flatTiles = equations.flatMap(eq => eq.parts.map(p => ({ text: p, eq: eq.full, matched: false })));
+    let shuffledTiles = flatTiles.sort(() => Math.random() - 0.5);
+    const board = document.getElementById('game-board');
+    const message = document.getElementById('message');
+    const completed = document.getElementById('completed');
+    let selected = [];
+    let matchedCount = 0;
+    function renderBoard() {
+      board.innerHTML = '';
+      shuffledTiles.forEach((tile, index) => {
+        if (tile.matched) return;
+        const div = document.createElement('div');
+        div.id = `tile-${index}`;
+        div.className = 'tile';
+        div.innerText = tile.text;
+        if (selected.includes(index)) div.classList.add('selected');
+        div.addEventListener('click', () => handleTileClick(index));
+        board.appendChild(div);
+      });
+    }
+    function handleTileClick(i) {
+      if (selected.includes(i) || shuffledTiles[i].matched) return;
+      selected.push(i);
+      renderBoard();
+      if (selected.length === 2) {
+        const [a, b] = selected;
+        const t1 = shuffledTiles[a], t2 = shuffledTiles[b];
+        const isMatch = (t1.eq === `${t1.text}=${t2.text}`) || (t1.eq === `${t2.text}=${t1.text}`);
+        if (isMatch) {
+          message.innerText = 'Nice!';
+          const tileElA = document.getElementById(`tile-${a}`);
+          const tileElB = document.getElementById(`tile-${b}`);
+          tileElA.classList.add('fade-out');
+          tileElB.classList.add('fade-out');
+          setTimeout(() => {
+            t1.matched = true;
+            t2.matched = true;
+            matchedCount++;
+            if (matchedCount === equations.length) {
+              completed.innerText = 'All Equations Matched!';
+            }
+            message.innerText = '';
+            selected = [];
+            renderBoard();
+          }, 500);
+        } else {
+          message.innerText = 'Try Again!';
+          setTimeout(() => {
+            message.innerText = '';
+            selected = [];
+            renderBoard();
+          }, 800);
+        }
+      }
+    }
+    renderBoard();
+  </script>
 </body>
 </html>
