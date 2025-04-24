@@ -75,14 +75,32 @@
     .tile {
       background-color: #fff;
       border-radius: 12px;
-      padding: 20px;
-      font-size: 1.2rem;
+      padding: 10px;
+      font-size: 1.1rem;
       color: #444;
       text-align: center;
       cursor: pointer;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
       user-select: none;
       transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 60px;
+      line-height: 1.4;
+      text-align: center;
+    }
+    .tile:active {
+      transform: scale(0.95);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .tile:active {
+      transform: translateY(2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .tile:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.5);
     }
     .tile:hover {
       transform: translateY(-4px);
@@ -131,19 +149,32 @@
     <div id="completed"></div>
   </main>
   <script>
-    const equations = [
-      { parts: ['F', 'ma'], full: 'F=ma' },
-      { parts: ['E', 'mc²'], full: 'E=mc²' },
-      { parts: ['V', 'IR'], full: 'V=IR' },
-      { parts: ['p', 'mv'], full: 'p=mv' }
-    ];
-    const flatTiles = equations.flatMap(eq => eq.parts.map(p => ({ text: p, eq: eq.full, matched: false })));
+const definitions = [
+  { term: 'Gravity', definition: 'A force that attracts two bodies toward each other.' },
+  { term: 'Inertia', definition: 'The tendency of an object to resist changes in its motion.' },
+  { term: 'p', definition: 'mv' },
+  { term: 'Buoyancy', definition: 'The upward force exerted by a fluid on an immersed object.' },
+  { term: 'Energy', definition: 'The capacity to do work or produce change.' },
+  { term: 'Friction', definition: 'A force that opposes the motion of one surface over another.' },
+  { term: 'F', definition: 'ma' }, // Optional: keep this equation for variety
+  {term: 'Work', definition: 'The product of force and displacement in the direction of the force.'},
+  { term: 'Kinetic Energy', definition: 'The energy of an object due to its motion.' },
+  { term: 'Potential Energy', definition: 'The energy stored in an object due to its position or configuration.' }
+];
+
+  
+    const flatTiles = definitions.flatMap(item => [
+      { text: item.term, match: item.term + '-' + item.definition, matched: false },
+      { text: item.definition, match: item.term + '-' + item.definition, matched: false }
+    ]);
+  
     let shuffledTiles = flatTiles.sort(() => Math.random() - 0.5);
     const board = document.getElementById('game-board');
     const message = document.getElementById('message');
     const completed = document.getElementById('completed');
     let selected = [];
     let matchedCount = 0;
+  
     function renderBoard() {
       board.innerHTML = '';
       shuffledTiles.forEach((tile, index) => {
@@ -157,6 +188,7 @@
         board.appendChild(div);
       });
     }
+  
     function handleTileClick(i) {
       if (selected.includes(i) || shuffledTiles[i].matched) return;
       selected.push(i);
@@ -164,7 +196,7 @@
       if (selected.length === 2) {
         const [a, b] = selected;
         const t1 = shuffledTiles[a], t2 = shuffledTiles[b];
-        const isMatch = (t1.eq === `${t1.text}=${t2.text}`) || (t1.eq === `${t2.text}=${t1.text}`);
+        const isMatch = (t1.match === t2.match);
         if (isMatch) {
           message.innerText = 'Nice!';
           const tileElA = document.getElementById(`tile-${a}`);
@@ -175,8 +207,8 @@
             t1.matched = true;
             t2.matched = true;
             matchedCount++;
-            if (matchedCount === equations.length) {
-              completed.innerText = 'All Equations Matched!';
+            if (matchedCount === definitions.length) {
+              completed.innerText = 'All Terms Matched!';
             }
             message.innerText = '';
             selected = [];
@@ -192,7 +224,9 @@
         }
       }
     }
+  
     renderBoard();
   </script>
+  
 </body>
 </html>
